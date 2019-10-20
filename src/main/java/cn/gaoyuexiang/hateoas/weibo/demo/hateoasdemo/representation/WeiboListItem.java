@@ -5,6 +5,6 @@ import lombok.Value;
 @Value
 public class WeiboListItem {
   private String id;
-  private User owner;
+  private UserInfo owner;
   private String content;
 }

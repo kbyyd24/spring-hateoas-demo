@@ -1,21 +1,48 @@
 package cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.service;
 
+import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.model.User;
+import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.model.Weibo;
+import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.repository.UserRepository;
+import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.repository.WeiboRepository;
 import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.representation.HomePage;
-import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.representation.User;
+import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.representation.UserInfo;
 import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.representation.WeiboListItem;
 import org.springframework.stereotype.Service;
 
-import static java.util.Collections.singletonList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
 @Service
 public class HomePageService {
 
-  private static final String WEIBO_CONTENT = "#洞见# 《真正的敏捷工作流 —— GitHub flow》" +
-      "作为“敏捷”的固有属性，持续集成并不仅限于特定的模式，不同的项目可能遵循不同的实践，形式多样，效果可能也参差不齐。" +
-      "为了解决这些问题，一些 Workflow 的通用模式被提出，而本文的主角，就是其中的天之骄子 —— GitHub flow。";
+  private final WeiboRepository weiboRepository;
+  private final UserRepository userRepository;
+
+  public HomePageService(WeiboRepository weiboRepository, UserRepository userRepository) {
+    this.weiboRepository = weiboRepository;
+    this.userRepository = userRepository;
+  }
 
   public HomePage getHomePage() {
-    User poster = new User("userId", "ThoughtWorks", "/weibo/xxx");
-    return new HomePage(singletonList(new WeiboListItem("weiboId", poster, WEIBO_CONTENT)));
+    Collection<Weibo> weibos = weiboRepository.findAll();
+    Map<String, User> users = weibos.stream()
+        .map(Weibo::getUserId)
+        .map(userRepository::findBy)
+        .collect(toMap(User::getId, identity()));
+
+    List<WeiboListItem> weiboListItems = weibos.stream()
+        .map(weibo -> {
+          User user = users.get(weibo.getUserId());
+          UserInfo owner = new UserInfo(user.getId(), user.getName(), user.getAvatar());
+          return new WeiboListItem(weibo.getId(), owner, weibo.getContent());
+        })
+        .collect(toList());
+
+    return new HomePage(weiboListItems);
   }
 }

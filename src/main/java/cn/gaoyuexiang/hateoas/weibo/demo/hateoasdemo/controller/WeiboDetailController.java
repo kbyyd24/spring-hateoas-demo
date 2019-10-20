@@ -14,6 +14,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 @Slf4j
 public class WeiboDetailController {
 
+  private static final String USER_ID = "X-USER-ID";
   private final WeiboDetailService weiboDetailService;
 
   public WeiboDetailController(WeiboDetailService weiboDetailService) {
@@ -22,8 +23,8 @@ public class WeiboDetailController {
 
   @PostMapping
   @ResponseStatus(CREATED)
-  public void post(@RequestBody PostWeiboCommand command) {
-    log.info("Received post weibo command, content is [{}]", command.getContent());
+  public void post(@RequestBody PostWeiboCommand command, @RequestHeader(USER_ID) String userId) {
+    weiboDetailService.post(command, userId);
   }
 
   @GetMapping("{weiboId}")
@@ -33,11 +34,11 @@ public class WeiboDetailController {
 
   @PostMapping("{weiboId}")
   public void edit(@PathVariable("weiboId") String id, @RequestBody EditWeiboCommand command) {
-    log.info("Received edit weibo command, id is [{}], content is [{}]", id, command.getContent());
+    weiboDetailService.edit(id, command);
   }
 
   @DeleteMapping("{weiboId}")
   public void delete(@PathVariable("weiboId") String id) {
-    log.info("Received delete weibo command, id is [{}]", id);
+    weiboDetailService.delete(id);
   }
 }
