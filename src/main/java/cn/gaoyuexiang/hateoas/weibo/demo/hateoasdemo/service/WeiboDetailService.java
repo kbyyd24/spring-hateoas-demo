@@ -11,7 +11,10 @@ import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.representation.UserInfo;
 import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.representation.WeiboDetail;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class WeiboDetailService {
@@ -28,7 +31,11 @@ public class WeiboDetailService {
     Weibo weibo = weiboRepository.findBy(id).orElseThrow(NotFoundException::new);
     User user = userRepository.findBy(weibo.getUserId());
     UserInfo owner = new UserInfo(user.getId(), user.getName(), user.getAvatar());
-    return new WeiboDetail(id, owner, weibo.getContent());
+    List<UserInfo> likedBy = weibo.getLikedBy().stream()
+        .map(userRepository::findBy)
+        .map(u -> new UserInfo(u.getId(), u.getName(), u.getAvatar()))
+        .collect(toList());
+    return new WeiboDetail(id, owner, weibo.getContent(), likedBy);
   }
 
   public void post(PostWeiboCommand command, String userId) {

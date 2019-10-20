@@ -7,4 +7,5 @@ public class WeiboListItem {
   private String id;
   private UserInfo owner;
   private String content;
+  private int likedCount;
 }

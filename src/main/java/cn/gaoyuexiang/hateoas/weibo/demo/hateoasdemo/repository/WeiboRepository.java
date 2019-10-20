@@ -1,5 +1,6 @@
 package cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.repository;
 
+import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.exception.NotFoundException;
 import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.model.Weibo;
 import org.springframework.stereotype.Repository;
 
@@ -21,7 +22,10 @@ public class WeiboRepository {
   }
 
   public void delete(String id) {
-    weibos.remove(id);
+    Weibo removedWeibo = weibos.remove(id);
+    if (removedWeibo == null) {
+      throw new NotFoundException();
+    }
   }
 
   public Collection<Weibo> findAll() {

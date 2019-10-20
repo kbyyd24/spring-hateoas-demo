@@ -39,7 +39,7 @@ public class HomePageService {
         .map(weibo -> {
           User user = users.get(weibo.getUserId());
           UserInfo owner = new UserInfo(user.getId(), user.getName(), user.getAvatar());
-          return new WeiboListItem(weibo.getId(), owner, weibo.getContent());
+          return new WeiboListItem(weibo.getId(), owner, weibo.getContent(), weibo.getLikedBy().size());
         })
         .collect(toList());
 
