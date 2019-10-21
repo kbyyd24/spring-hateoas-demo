@@ -33,9 +33,9 @@ public class WeiboDetailController {
   }
 
   @GetMapping("{weiboId}")
-  public WeiboDetail viewDetail(@PathVariable("weiboId") String id) {
+  public WeiboDetail viewDetail(@PathVariable("weiboId") String id, @RequestHeader(value = USER_ID, required = false) String userId) {
     WeiboDetail weiboDetail = weiboDetailService.viewDetail(id);
-    return weiboDetailRepresentationService.assemble(weiboDetail);
+    return weiboDetailRepresentationService.assemble(weiboDetail, userId);
   }
 
   @PostMapping("{weiboId}")

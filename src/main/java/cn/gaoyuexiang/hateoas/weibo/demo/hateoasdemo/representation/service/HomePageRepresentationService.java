@@ -10,11 +10,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class HomePageRepresentationService {
-  public HomePage assemble(HomePage homePage) {
+  public HomePage assemble(HomePage homePage, String userId) {
     homePage.getWeiboListItems()
-        .forEach(item -> item.add(linkTo(methodOn(WeiboDetailController.class).viewDetail(item.getId())).withSelfRel()));
-    homePage.add(linkTo(methodOn(HomePageController.class).getHomePage()).withSelfRel());
-    homePage.add(linkTo(methodOn(WeiboDetailController.class).post(null, null)).withRel("postWeibo"));
+        .forEach(item -> item.add(linkTo(methodOn(WeiboDetailController.class).viewDetail(item.getId(), null)).withSelfRel()));
+    homePage.add(linkTo(methodOn(HomePageController.class).getHomePage(userId)).withSelfRel());
+    homePage.addIf(userId != null, () -> linkTo(methodOn(WeiboDetailController.class).post(null, null)).withRel("postWeibo"));
     return homePage;
   }
 }
