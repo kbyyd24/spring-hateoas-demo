@@ -38,10 +38,11 @@ public class WeiboDetailService {
     return new WeiboDetail(id, owner, weibo.getContent(), likedBy);
   }
 
-  public void post(PostWeiboCommand command, String userId) {
+  public String post(PostWeiboCommand command, String userId) {
     String id = UUID.randomUUID().toString();
     Weibo weibo = new Weibo(id, userId, command.getContent());
     weiboRepository.save(weibo);
+    return id;
   }
 
   public void edit(String id, EditWeiboCommand command) {

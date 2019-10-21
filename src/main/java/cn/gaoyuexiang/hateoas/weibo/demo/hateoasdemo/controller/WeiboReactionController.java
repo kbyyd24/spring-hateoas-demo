@@ -1,6 +1,8 @@
 package cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.controller;
 
 import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.service.WeiboReactionService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,12 +16,14 @@ public class WeiboReactionController {
   }
 
   @PostMapping("like")
-  public void like(@PathVariable("weiboId") String weiboId, @RequestHeader(USER_ID) String userId) {
+  public ResponseEntity<Void> like(@PathVariable("weiboId") String weiboId, @RequestHeader(USER_ID) String userId) {
     weiboReactionService.like(weiboId, userId);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   @PostMapping("cancel-like")
-  public void cancelLike(@PathVariable("weiboId") String weiboId, @RequestHeader(USER_ID) String userId) {
+  public ResponseEntity<Void> cancelLike(@PathVariable("weiboId") String weiboId, @RequestHeader(USER_ID) String userId) {
     weiboReactionService.cancelLike(weiboId, userId);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 }

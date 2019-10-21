@@ -14,6 +14,7 @@ public class HomePageRepresentationService {
     homePage.getWeiboListItems()
         .forEach(item -> item.add(linkTo(methodOn(WeiboDetailController.class).viewDetail(item.getId())).withSelfRel()));
     homePage.add(linkTo(methodOn(HomePageController.class).getHomePage()).withSelfRel());
+    homePage.add(linkTo(methodOn(WeiboDetailController.class).post(null, null)).withRel("postWeibo"));
     return homePage;
   }
 }
