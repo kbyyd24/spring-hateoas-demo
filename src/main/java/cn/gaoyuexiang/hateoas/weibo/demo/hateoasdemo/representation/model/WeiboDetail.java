@@ -1,10 +1,12 @@
-package cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.representation;
+package cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.representation.model;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.List;
 
-@Value
+@AllArgsConstructor
+@Getter
 public class WeiboDetail {
   private String id;
   private UserInfo owner;

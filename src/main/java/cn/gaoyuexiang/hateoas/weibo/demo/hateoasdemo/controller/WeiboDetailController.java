@@ -2,7 +2,7 @@ package cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.controller;
 
 import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.command.EditWeiboCommand;
 import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.command.PostWeiboCommand;
-import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.representation.WeiboDetail;
+import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.representation.model.WeiboDetail;
 import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.service.WeiboDetailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

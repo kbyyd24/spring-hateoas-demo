@@ -1,4 +1,4 @@
-package cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.representation;
+package cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.representation.model;
 
 import lombok.Value;
 

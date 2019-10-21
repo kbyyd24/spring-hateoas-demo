@@ -4,9 +4,9 @@ import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.model.User;
 import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.model.Weibo;
 import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.repository.UserRepository;
 import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.repository.WeiboRepository;
-import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.representation.HomePage;
-import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.representation.UserInfo;
-import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.representation.WeiboListItem;
+import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.representation.model.HomePage;
+import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.representation.model.UserInfo;
+import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.representation.model.WeiboListItem;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
