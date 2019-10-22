@@ -33,6 +33,7 @@ public class HomePageService {
     Map<String, User> users = weibos.stream()
         .map(Weibo::getUserId)
         .map(userRepository::findBy)
+        .distinct()
         .collect(toMap(User::getId, identity()));
 
     List<WeiboListItem> weiboListItems = weibos.stream()
