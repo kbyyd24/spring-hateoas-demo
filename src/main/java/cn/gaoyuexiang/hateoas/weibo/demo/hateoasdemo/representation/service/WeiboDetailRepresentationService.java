@@ -20,8 +20,8 @@ public class WeiboDetailRepresentationService {
   public RepresentationModel<WeiboDetail> assemble(String weiboId) {
     RepresentationModel<WeiboDetail> model = new RepresentationModel<>();
     model.add(linkTo(methodOn(WeiboDetailController.class).viewDetail(weiboId, null)).withSelfRel());
-    model.add(linkTo(methodOn(WeiboDetailController.class).edit(weiboId, null)).withRel("edit"));
-    model.add(linkTo(methodOn(WeiboDetailController.class).delete(weiboId)).withRel("delete"));
+    model.add(linkTo(methodOn(WeiboDetailController.class).edit(weiboId, null, null)).withRel("edit"));
+    model.add(linkTo(methodOn(WeiboDetailController.class).delete(weiboId, null)).withRel("delete"));
     return model;
   }
 
@@ -31,8 +31,8 @@ public class WeiboDetailRepresentationService {
     model.addAllIf(
         Objects.equals(userId, model.getOwner().getId()),
         () ->
-            asList(linkTo(methodOn(WeiboDetailController.class).edit(model.getId(), null)).withRel("edit"),
-                linkTo(methodOn(WeiboDetailController.class).delete(model.getId())).withRel("delete")));
+            asList(linkTo(methodOn(WeiboDetailController.class).edit(model.getId(), null, null)).withRel("edit"),
+                linkTo(methodOn(WeiboDetailController.class).delete(model.getId(), null)).withRel("delete")));
 
     boolean hasLiked = model.getLikedBy().stream().map(UserInfo::getId).anyMatch(id -> id.equals(userId));
     if (hasLiked) {

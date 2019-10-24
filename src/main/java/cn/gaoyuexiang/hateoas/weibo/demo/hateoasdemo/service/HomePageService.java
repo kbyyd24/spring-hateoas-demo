@@ -32,8 +32,8 @@ public class HomePageService {
     Collection<Weibo> weibos = weiboRepository.findAll();
     Map<String, User> users = weibos.stream()
         .map(Weibo::getUserId)
-        .map(userRepository::findBy)
         .distinct()
+        .map(userRepository::findBy)
         .collect(toMap(User::getId, identity()));
 
     List<WeiboListItem> weiboListItems = weibos.stream()

@@ -1,6 +1,7 @@
 package cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.model;
 
 import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.exception.ConflictException;
+import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.exception.NotAllowedException;
 import lombok.Getter;
 
 import java.util.HashSet;
@@ -19,7 +20,10 @@ public class Weibo {
     this.content = content;
   }
 
-  public void edit(String content) {
+  public void edit(String userId, String content) {
+    if (!this.userId.equals(userId)) {
+      throw new NotAllowedException();
+    }
     this.content = content;
   }
 

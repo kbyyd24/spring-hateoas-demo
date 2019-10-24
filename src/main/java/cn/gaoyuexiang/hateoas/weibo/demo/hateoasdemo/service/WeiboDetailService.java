@@ -2,6 +2,7 @@ package cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.service;
 
 import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.command.EditWeiboCommand;
 import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.command.PostWeiboCommand;
+import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.exception.NotAllowedException;
 import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.exception.NotFoundException;
 import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.model.User;
 import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.model.Weibo;
@@ -45,13 +46,17 @@ public class WeiboDetailService {
     return id;
   }
 
-  public void edit(String id, EditWeiboCommand command) {
+  public void edit(String id, String userId, EditWeiboCommand command) {
     Weibo weibo = weiboRepository.findBy(id).orElseThrow(NotFoundException::new);
-    weibo.edit(command.getContent());
+    weibo.edit(userId, command.getContent());
     weiboRepository.save(weibo);
   }
 
-  public void delete(String id) {
+  public void delete(String id, String userId) {
+    Weibo weibo = weiboRepository.findBy(id).orElseThrow(NotFoundException::new);
+    if (!weibo.getUserId().equals(userId)) {
+        throw new NotAllowedException();
+    }
     weiboRepository.delete(id);
   }
 }

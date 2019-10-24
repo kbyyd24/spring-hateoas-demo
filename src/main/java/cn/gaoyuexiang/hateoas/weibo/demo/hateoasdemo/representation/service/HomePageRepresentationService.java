@@ -4,7 +4,7 @@ import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.controller.HomePageControll
 import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.controller.WeiboDetailController;
 import cn.gaoyuexiang.hateoas.weibo.demo.hateoasdemo.representation.model.HomePage;
 import org.springframework.stereotype.Service;
-
+import org.springframework.util.StringUtils;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -14,7 +14,7 @@ public class HomePageRepresentationService {
     homePage.getWeiboListItems()
         .forEach(item -> item.add(linkTo(methodOn(WeiboDetailController.class).viewDetail(item.getId(), null)).withSelfRel()));
     homePage.add(linkTo(methodOn(HomePageController.class).getHomePage(userId)).withSelfRel());
-    homePage.addIf(userId != null, () -> linkTo(methodOn(WeiboDetailController.class).post(null, null)).withRel("postWeibo"));
+    homePage.addIf(!StringUtils.isEmpty(userId), () -> linkTo(methodOn(WeiboDetailController.class).post(null, null)).withRel("postWeibo"));
     return homePage;
   }
 }
