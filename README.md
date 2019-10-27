@@ -1,8 +1,8 @@
 # HATEOAS-DEMO
 
-Demo about implement `HATEOAS` service by `Spring HATEOAS`.
+Demo about implement `HATEOAS` service by `Spring HATEOAS`. See the client [here](https://github.com/kbyyd24/vue-hateoas-demo)
 
-You can check out to tag `hateoas` and `crud` to see the different between the two REST service.
+You can checkout to tag `hateoas` and `crud` to see the different between the two REST service.
 
 ## How to run
 
