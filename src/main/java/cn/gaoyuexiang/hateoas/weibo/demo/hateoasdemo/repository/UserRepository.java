@@ -11,8 +11,9 @@ import static java.util.Arrays.asList;
 public class UserRepository {
 
   private static final List<User> USERS = asList(
-      new User("kunkun", "蔡徐坤", "/weibo/xxx"),
-      new User("lbj", "詹姆斯", "/weibo/zzz")
+      new User("kunkun", "蔡徐坤", "/weibo/ccc"),
+      new User("jay", "周杰伦", "/weibo/zzz"),
+      new User("ming", "姚明", "/weibo/yyy")
   );
 
   public User findBy(String id) {
