@@ -34,18 +34,20 @@ public class WeiboDetailRepresentationService {
             asList(linkTo(methodOn(WeiboDetailController.class).edit(model.getId(), null, null)).withRel("edit"),
                 linkTo(methodOn(WeiboDetailController.class).delete(model.getId(), null)).withRel("delete")));
 
-    boolean hasLiked = model.getLikedBy().stream().map(UserInfo::getId).anyMatch(id -> id.equals(userId));
-    if (hasLiked) {
-      model.add(linkTo(methodOn(WeiboReactionController.class).cancelLike(model.getId(), null)).withRel("cancelLike"));
-    } else {
-      model.add(linkTo(methodOn(WeiboReactionController.class).like(model.getId(), null)).withRel("like"));
+    if (userId != null) {
+      boolean hasLiked = model.getLikedBy().stream().map(UserInfo::getId).anyMatch(id -> id.equals(userId));
+      if (hasLiked) {
+        model.add(linkTo(methodOn(WeiboReactionController.class).cancelLike(model.getId(), null)).withRel("cancelLike"));
+      } else {
+        model.add(linkTo(methodOn(WeiboReactionController.class).like(model.getId(), null)).withRel("like"));
+      }
     }
     return model;
   }
 
   public RepresentationModel<WeiboDetail> assembleDeleted() {
     RepresentationModel<WeiboDetail> model = new RepresentationModel<>();
-    model.add(linkTo(methodOn(HomePageController.class).getHomePage(null)).withSelfRel());
+    model.add(linkTo(methodOn(HomePageController.class).getHomePage(null)).withRel("homePage"));
     return model;
   }
 }
